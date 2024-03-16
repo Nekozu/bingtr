@@ -8,23 +8,11 @@ const bot = new Bot("Your own bot token");
 
 bot.use(session());
 
-
-
-// Command handler for "/start"
-
 bot.command("start", async (ctx) => { // Initialize language if undefined
-
-
-
-    // Get user's first name if available
 
     const userName = ctx.from.first_name ? ` ${ctx.from.first_name}` : '';
 
-
-
     const startText = `Hii${userName}! 👋 Nice to meet you! I'm Aysbiz Translation. 🌈 I can translate text to any language you want. If you want to know more about how and what, just click the help button below!`;
-
-        // User has not selected a language yet
 
         const buttonText = 'Select Language';
 
@@ -41,9 +29,6 @@ bot.command("start", async (ctx) => { // Initialize language if undefined
         const inlineKeyboard = new InlineKeyboard().row(...languageButton);
 
         await ctx.reply(startText, { reply_markup: inlineKeyboard });
-
-        // User has already selected a language
-
 });
 
 bot.callbackQuery("balik", async (ctx) => {
@@ -252,10 +237,6 @@ bot.callbackQuery('select_language', async (ctx) => {
 
       rowButtons.push(languageButton);
 
-  
-
-      // When 5 buttons have been added or it's the last language, add the row to the keyboard
-
       if (rowButtons.length === 5 || index === languages.length - 1) {
 
         inlineKeyboard.row(...rowButtons);
@@ -291,12 +272,6 @@ bot.callbackQuery('select_language', async (ctx) => {
   return;
 
 });
-
-
-
-// Callback query handler for selecting language
-
-
 
 bot.command('language', async (ctx) => {
 
@@ -454,21 +429,15 @@ if (ctx.chat.type !== 'private') {
 
      rowButtons.push(languageButton);
 
- 
-
-     // When 5 buttons have been added or it's the last language, add the row to the keyboard
-
      if (rowButtons.length === 5 || index === languages.length - 1) {
 
        inlineKeyboard.row(...rowButtons);
 
-       rowButtons = [];  // Reset the rowButtons for the next row
+       rowButtons = [];
 
      }
 
    });
-
-
 
   await ctx.reply('Choose Your Preferred Language 🌐:', { reply_markup: inlineKeyboard });
 
@@ -477,8 +446,6 @@ if (ctx.chat.type !== 'private') {
 
 
 bot.command('help', async (ctx) => {
-
-
 
     const commandInfoText = `
 
@@ -512,7 +479,7 @@ bot.command('help', async (ctx) => {
 
 🔗 *Links:*
 
-- [Aysbiz Channel](https://t.me/aysbiz)
+- [Nekozu Channel](https://t.me/nekozuX)
 
 `;
 
@@ -528,7 +495,7 @@ bot.command('help', async (ctx) => {
 
         { text: 'Back', callback_data: 'balik' },
 
-        { text: 'About 📚', url: 'https://t.me/aysbiz' }
+        { text: 'About 📚', url: 'https://t.me/nekozuX' }
 
     ];
 
@@ -537,8 +504,6 @@ bot.command('help', async (ctx) => {
     await ctx.editMessageText(commandInfoText, { parse_mode: 'Markdown', reply_markup: inlineKeyboard });
 
 });
-
-
 
 bot.callbackQuery('command', async (ctx) => {
 
@@ -576,7 +541,7 @@ bot.callbackQuery('command', async (ctx) => {
 
 🔗 *Links:*
 
-- [Aysbiz Channel](https://t.me/aysbiz)
+- [Nekozu Channel](https://t.me/nekozuX)
 
 `;
 
@@ -622,10 +587,6 @@ bot.callbackQuery('command', async (ctx) => {
 
 });
 
-
-
-// Callback query handler for changing language
-
 bot.callbackQuery(/language_(\w+)/, async (ctx) => {
 
  try{
@@ -668,12 +629,6 @@ return;
 
 });
 
-
-
-
-
-// Text message handler for translation
-
 bot.on('message:text', async (ctx) => {
 
   if (ctx.chat.type === 'private') {
@@ -708,7 +663,7 @@ bot.on('message:text', async (ctx) => {
 
         { text: buttonText, callback_data: 'select_language' },
 
-        { text: 'Channel 📚', url: 'https://t.me/aysbiz' }
+        { text: 'Channel 📚', url: 'https://t.me/nekozuX' }
 
       ];
 
@@ -774,7 +729,7 @@ bot.on('message:text', async (ctx) => {
 
         }
 
-        button = [{ text: 'Try at PM', url: 'https://t.me/AysbizTranslationBot' }];
+        button = [{ text: 'Try at PM', url: 'https://t.me/nekotrqrbot' }];
 
         await ctx.reply('Translation: ' + translatedText.translation, {reply_markup: {inline_keyboard: [button]}});
 
@@ -860,7 +815,7 @@ bot.callbackQuery('translate', async (ctx) => {
 
     const translated = await translate(text, null, ctx.session.language);
 
-    await ctx.api.editMessageText(ctx.chat.id, ctx.callbackQuery.message.message_id, translated.translation, {reply_markup: {inline_keyboard: [[{ text: 'Dont forget to subscribe!', url: 'https://t.me/aysbiz' }]]}});
+    await ctx.api.editMessageText(ctx.chat.id, ctx.callbackQuery.message.message_id, translated.translation, {reply_markup: {inline_keyboard: [[{ text: 'Dont forget to subscribe!', url: 'https://t.me/nekozuX' }]]}});
 
   } catch (err) {
 
